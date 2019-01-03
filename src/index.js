@@ -1,17 +1,21 @@
-const bodyParser = require('body-parser');
 const express = require('express');
-const articles = require('./articles');
-const login = require('./login');
-const gallery = require('./gallery');
-const cors = require('cors');
 const app = express();
 const port = 3000;
+
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const login = require('./login');
+const register = require('./register');
+const articles = require('./articles');
+const gallery = require('./gallery');
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/articles', articles);
 app.use('/login', login);
-app.use('/gallery', gallery)
+app.use('/register', register);
+app.use('/articles', articles);
+app.use('/gallery', gallery);
 
 app.listen(port);

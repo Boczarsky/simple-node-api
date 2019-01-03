@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const btoa = require('btoa');
+const storage = require('./storage');
 
 router.route('/').post(loginHandler);
 
@@ -17,7 +18,7 @@ function loginHandler(req, res){
 }
 
 function userIsValid(username, password) {
-    return username === 'admin' && password === 'Admin1'
+    return storage.users.includes((item) => item.username === username && item.password === password)
 }
 
 module.exports = router;
