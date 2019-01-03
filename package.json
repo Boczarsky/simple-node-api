@@ -1,7 +1,7 @@
 {
-  "name": "tutorial-rest",
+  "name": "node-rest-api",
   "version": "1.0.0",
-  "description": "REST API for tutorial-app",
+  "description": "simple node REST API",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js"
