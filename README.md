@@ -21,6 +21,16 @@
 }</code></pre>
   </li>
   <li>
+    <h2>/register</h2>
+    <h3>POST</h3>
+    <p>For register new user</p>
+    <h4>Request</h4>
+    <pre><code>{
+    username: string,
+    password: string
+}</code></pre>
+  </li>
+  <li>
     <h2>/articles</h2>
     <h3>GET</h3>
     <p>Fetch for array of articles</p>
