@@ -9,10 +9,17 @@ const port = 3000;
 app.use( bodyParser.json() );
 app.use(cors());
 
-app.get('/articles', (req, res) => {
+app.route('/articles').get(getArticles).post(addArticle).delete(deleteArticle);
+app.route('/login').post(loginHandler);
+app.route('/gallery').get(getGallery).post(addToGallery).delete(deleteFromGallery);
+
+app.listen(port);
+
+function getArticles(req, res) {
     res.send({articles: storage.articles});
-});
-app.post('/articles', (req, res) => {
+}
+
+function addArticle(req, res) {
     const data = req.body;
     if(articleDataIsValid(data)) {
         storage.articles.push(data)
@@ -21,8 +28,9 @@ app.post('/articles', (req, res) => {
     else {
         res.status(403).send({message: 'Wrong data'});
     }
-});
-app.delete('/articles', (req, res) => {
+}
+
+function deleteArticle(req, res) {
     const index = storage.articles.findIndex((data) => {
         return data.title === req.body.title && data.url === req.body.url;
     });
@@ -31,7 +39,8 @@ app.delete('/articles', (req, res) => {
         res.sendStatus(200);
     }
     else res.sendStatus(410);
-});
+}
+
 function articleDataIsValid(data) {
     if(data) {
         return data.header && data.content;
@@ -40,7 +49,8 @@ function articleDataIsValid(data) {
         return false;
     }
 }
-app.post('/login', (req, res) => {
+
+function loginHandler(req, res){
     const username = req.body.username;
     const password = req.body.password;
     if(username === 'admin' && password === 'Admin1') {
@@ -50,11 +60,13 @@ app.post('/login', (req, res) => {
     else {
         res.status(403).send({message: 'Wrong credentials you poor hacker'});
     }
-})
-app.get('/gallery', (req, res) => {
+}
+
+function getGallery(req, res) {
     res.send({images: storage.gallery});
-});
-app.post('/gallery', (req, res) => {
+}
+
+function addToGallery(req, res) {
     const data = req.body;
     if(galleryDataIsValid(data)) {
         storage.gallery.push(data);
@@ -63,8 +75,9 @@ app.post('/gallery', (req, res) => {
     else {
         res.status(403).send({message: 'Wrong data'})
     }
-});
-app.delete('/gallery', (req, res) => {
+}
+
+function deleteFromGallery(req, res) {
     const index = storage.gallery.findIndex((data) => {
         return data.title === req.body.title && data.url === req.body.url;
     });
@@ -73,8 +86,8 @@ app.delete('/gallery', (req, res) => {
         res.sendStatus(200);
     }
     else res.sendStatus(410);
+}
 
-});
 function galleryDataIsValid(data) {
     if(data) {
         return data.title && data.url;
@@ -83,4 +96,3 @@ function galleryDataIsValid(data) {
         return false;
     }
 }
-app.listen(port);
