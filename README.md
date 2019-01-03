@@ -1,4 +1,7 @@
-# simple-node-api
+# Simple Node.js REST API
+
+<h1>How to run</h1>
+<p>First open terminal in main directory and type "npm install". When process finished type in terminal "npm start" and server should start on localhost:3000</p>
 
 <h1>Endpoints</h1>
 <ul>
