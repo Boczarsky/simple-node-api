@@ -94,4 +94,15 @@
     <h3>DELETE</h3>
     <p>Delete single specific image by id</p>
   </li>
+  <li>
+    <h2>/wipe?option=(options)</h2>
+    <h3>POST</h3>
+    <p>Use for wipe whole data or just part</p>
+    <h4>Options:</h4>
+    <ul>
+      <li>all - for wipe all data</li>
+      <li>gallery - for wipe only gallery data</li>
+      <li>articles - for wipe only articles data</li>
+      <li>users - for wipe only users data</li>
+    </ul>
 </ul>
