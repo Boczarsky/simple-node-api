@@ -20,7 +20,7 @@ app.use('/register', register);
 app.use('/articles', articles);
 app.use('/gallery', gallery);
 
-app.get('/wipe', async (req, res) => {
+app.post('/wipe', async (req, res) => {
     const option = req.query.option
     if(option) {
         const done = await storage.wipeData(option.toLowerCase())
