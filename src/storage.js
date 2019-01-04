@@ -11,7 +11,7 @@ async function wipeDataFromDatabase(wipeOptions) {
     let data;
     switch(wipeOptions) {
         case WipeOptions.ALL:
-            data = {galleryNextId: 1, articlesNextId: 1, gallery: [], articles: [], users:[{username: 'admin', password: 'Admin1'}]}
+            data = {galleryNextId: 1, articlesNextId: 1, gallery: [], articles: [], users:[]}
             break;
         case WipeOptions.ARTICLES:
             data = await readFromDatabase();
