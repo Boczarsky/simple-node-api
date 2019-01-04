@@ -6,13 +6,13 @@ router.route('/').post(registrationHandler);
 
 async function registrationHandler(req, res) {
     if(!isRegistrationDataValid(req.body)) {
-        res.sendStatus(403).send({mesage: "Invalid data"});
+        res.status(403).send({mesage: "Invalid data"});
     }
     else {
         const data = await storage.get();
         const userExist = data.users.includes( (item) => item.username === req.body.username );
         if(userExist) {
-            res.sendStatus(403).send({message: "User already exist"});
+            res.status(403).send({message: "User already exist"});
         }
         else {
             const user = {};
