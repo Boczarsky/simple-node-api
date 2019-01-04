@@ -6,12 +6,14 @@ router.route('/').get(getArticles).post(addArticle);
 
 router.route('/:id').get(getArticle).delete(deleteArticle);
 
-function getArticles(req, res) {
-    res.status(200).send(storage.articles);
+async function getArticles(req, res) {
+    const data = await storage.get();
+    res.status(200).send(data.articles);
 }
 
-function getArticle(req, res) {
-    const article = storage.articles.find((item) => item.id === parseInt(req.params.id));
+async function getArticle(req, res) {
+    const data = await storage.get();
+    const article = data.articles.find((item) => item.id === parseInt(req.params.id));
     if(article) {
         res.status(200).send(article);
     }
@@ -20,26 +22,35 @@ function getArticle(req, res) {
     }
 }
 
-function addArticle(req, res) {
-    const data = req.body;
-    if(articleDataIsValid(data)) {
+async function addArticle(req, res) {
+    const data = await storage.get();
+    const articleData = req.body;
+    if(articleDataIsValid(articleData)) {
         const article = {};
-        article.id = storage.articlesNextId++;
-        article.header = data.header;
-        article.content = data.content;
-        storage.articles.push(article);
-        res.sendStatus(201);
+        article.id = data.articlesNextId++;
+        article.header = articleData.header;
+        article.content = articleData.content;
+        data.articles.push(article);
+        res.sendStatus(await storage.set(data));
     }
     else {
         res.status(403).send({message: 'Invalid data'});
     }
 }
 
-function deleteArticle(req, res) {
-    const index = storage.articles.findIndex((item) => item.id === parseInt(req.params.id));
+async function deleteArticle(req, res) {
+    const data = await storage.get();
+    const index = data.articles.findIndex((item) => item.id === parseInt(req.params.id));
     if(index !== -1){
-        storage.articles.splice(index, 1);
-        res.sendStatus(200);
+        data.articles.splice(index, 1);
+        const status = await storage.set(data);
+        if(status === 201) {
+            res.sendStatus(200);
+        }
+        else {
+            console.error(status);
+            res.sendStatus(500);
+        }
     }
     else res.sendStatus(410);
 }

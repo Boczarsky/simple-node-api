@@ -5,10 +5,10 @@ const storage = require('./storage');
 
 router.route('/').post(loginHandler);
 
-function loginHandler(req, res){
+async function loginHandler(req, res){
     const username = req.body.username;
     const password = req.body.password;
-    if(userIsValid(username, password)) {
+    if(await userIsValid(username, password)) {
         const token = btoa(username+password);
         res.status(200).send({token: token});
     }
@@ -17,8 +17,10 @@ function loginHandler(req, res){
     }
 }
 
-function userIsValid(username, password) {
-    return storage.users.includes((item) => item.username === username && item.password === password)
+async function userIsValid(username, password) {
+    const data = await storage.get();
+    const users = data.users;
+    return users.includes((item) => item.username === username && item.password === password)
 }
 
 module.exports = router;
