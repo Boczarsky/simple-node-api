@@ -20,10 +20,10 @@ app.use('/register', register);
 app.use('/articles', articles);
 app.use('/gallery', gallery);
 
-app.post('/wipe', async (req, res) => {
-    const option = req.query.option
-    if(option) {
-        const done = await storage.wipeData(option.toLowerCase())
+app.post('/storage', async (req, res) => {
+    const wipeOption = req.query.wipe
+    if(wipeOption) {
+        const done = await storage.wipeData(wipeOption.toLowerCase())
         if(done) {
             res.sendStatus(200);
         }
