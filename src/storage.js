@@ -15,10 +15,12 @@ async function wipeDataFromDatabase(wipeOptions) {
             break;
         case WipeOptions.ARTICLES:
             data = await readFromDatabase();
+            data.articlesNextId = 1;
             data.articles = [];
             break;
         case WipeOptions.GALLERY:
             data = await readFromDatabase();
+            data.galleryNextId = 1
             data.gallery = [];
             break;
         case WipeOptions.USERS:
