@@ -20,7 +20,7 @@ async function loginHandler(req, res){
 async function userIsValid(username, password) {
     const data = await storage.get();
     const users = data.users;
-    return users.includes((item) => item.username === username && item.password === password)
+    return users.some((item) => item.username === username && item.password === password)
 }
 
 module.exports = router;
